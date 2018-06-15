@@ -9,7 +9,7 @@ Source: github.com/gorodnichy/LA-R-KerasNN
 
 Based on:
 - https://github.com/jjallaire/deep-learning-with-r-notebooks
-- https://keras.rstudio.com),
+- https://keras.rstudio.com (= https://tensorflow.rstudio.com/keras)
 - https://www.manning.com/books/deep-learning-with-r
 - everything else found useful on the Web
 - and my own work back from 1995 :)
