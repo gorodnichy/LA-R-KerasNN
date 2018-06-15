@@ -1,7 +1,7 @@
 # LA-R-KerasNN
 Learn and Apply Keras/Tensorflow in R/RStudio Efficiently!
-
-`Learn and Apply Keras/Tensorflow in R/RStudio Efficiently!`    
+---
+'Learn and Apply Keras/Tensorflow in R/RStudio Efficiently'    
 Using complete prewritten codes and your own data,  
 With focus on sequential and text data processing   
 
