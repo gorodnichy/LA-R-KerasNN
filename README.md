@@ -19,7 +19,7 @@ Notes:
 - All codes are retreived from original sources, modified and directly runnable from RStudio
 - Latest version of RStudio is always recommended (Presently, Version 1.1.447 – 2018 )
 - The order of lessons is recommended by indices: e.g. 1-1-1 goes prior to 1-3-1. [.] are optional.
-- `# .... ####` comments are used for quick navigation from one example/section to another
+- `# .... ####` comments are used for quick navigation from one example/section to another within RStudio IDE.
 - `# >>> ... <<< ####` indicate Main sections
 - Data to play with (traffic, favourite readings) are provided, inc. very small sets to run fast.
 
