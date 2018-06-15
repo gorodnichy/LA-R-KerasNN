@@ -11,8 +11,8 @@ Based on:
 - https://github.com/jjallaire/deep-learning-with-r-notebooks
 - https://keras.rstudio.com (= https://tensorflow.rstudio.com/keras)
 - https://www.manning.com/books/deep-learning-with-r
-- everything else found useful on the Web
-- and my own work back from 1995 :)
+- everything else found useful on the Web, 
+- and my own work back from 1995-2005 :)
 
 
 Notes:
@@ -23,4 +23,4 @@ Notes:
 - `# >>> ... <<< ####` indicate Main sections
 - Data to play with (traffic, favourite readings) are provided, inc. very small sets to run fast.
 
-See also 'Learn and Apply interactive programmining and presentions with RStudio Shiny' (github.com/gorodnichy/LA-R-Rmd-Shiny)
+See also 'Learn and Apply interactive programming and presentations  with RStudio Shiny' (github.com/gorodnichy/LA-R-Rmd-Shiny)
