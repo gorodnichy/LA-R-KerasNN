@@ -8,11 +8,11 @@ With focus on sequential and text data processing
 Source: github.com/gorodnichy/LA-R-KerasNN
 
 Based on:
-https://github.com/jjallaire/deep-learning-with-r-notebooks
-https://keras.rstudio.com),
-https://www.manning.com/books/deep-learning-with-r
-everything else found useful on the Web
-and my own work back from 1995 :)
+- https://github.com/jjallaire/deep-learning-with-r-notebooks
+- https://keras.rstudio.com),
+- https://www.manning.com/books/deep-learning-with-r
+- everything else found useful on the Web
+- and my own work back from 1995 :)
 
 My Vision for AI Scientist in XXI c:
 1. In XXI c., we (AI Scientists) will learn and program differently as we did in XX c.
