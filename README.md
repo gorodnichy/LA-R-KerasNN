@@ -14,13 +14,6 @@ Based on:
 - everything else found useful on the Web
 - and my own work back from 1995 :)
 
-My Vision for AI Scientist in XXI c:
-1. In XXI c., we (AI Scientists) will learn and program differently as we did in XX c.
-- We are the users of the IDE that we are developing ourselves and for ourselves
-- R/RStudio examplies and leads this vision
-2. There's increasingly too much information to learn, and it is not what you already learnt  what matters,
-but how fast you can learn new knowledge and merge it with your knowledge one that matters
-3. Automation everywhere, including writting reports and leveraging other's codes
 
 Notes:
 - All codes are retreived from original sources, modified and directly runnable from RStudio
@@ -30,4 +23,4 @@ Notes:
 - `# >>> ... <<< ####` indicate Main sections
 - Data to play with (traffic, favourite readings) are provided, inc. very small sets to run fast.
 
-See also `Learn and Apply interactive programmining and presentions with RStudio Shiny`` (github.com/gorodnichy/LA-R-Rmd-Shiny)
+See also 'Learn and Apply interactive programmining and presentions with RStudio Shiny' (github.com/gorodnichy/LA-R-Rmd-Shiny)
