@@ -1,8 +1,8 @@
 # LA-R-KerasNN
 Learn and Apply Keras/Tensorflow in R/RStudio, Efficiently!
 ---
-'Learn and Apply Keras/Tensorflow in R/RStudio Efficiently'    
-Using complete prewritten codes and your own data, With focus on analysis sequential and text data   
+'Learn and Apply Artificial Neural Networks with Keras/Tensorflow in R/RStudio Efficiently'    -   
+Using complete prewritten codes and your own data, with example from analysis sequential and text data.   
 
 Based on:
 - https://github.com/jjallaire/deep-learning-with-r-notebooks
