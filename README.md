@@ -1,7 +1,6 @@
 # LA-R-KerasNN
-Learn and Apply Keras/Tensorflow in R/RStudio, Efficiently!
----
-'Learn and Apply Artificial Neural Networks with Keras/Tensorflow in R/RStudio Efficiently'    -   
+
+## *'Learn and Apply Artificial Neural Networks (aka Deep Learning) with Keras/Tensorflow in R/RStudio Efficiently'*    -   
 Using complete prewritten codes and your own data, with example from analysis sequential and text data.   
 
 Based on:
@@ -21,4 +20,4 @@ Notes:
 - `# >>> ... <<< ####` indicate Main sections
 - Data to play with (traffic, favourite readings) are provided, inc. very small sets to run fast.
 
-See also 'Learn and Apply interactive programming and presentations  with RStudio Shiny' (https://github.com/gorodnichy/LA-R-Rmd-Shiny)
+See also 'Learn and Apply interactive programming and presentations  with RStudio Shiny' (https://github.com/gorodnichy/LA-R-Rmd-Shiny).
