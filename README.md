@@ -7,7 +7,7 @@ Based on:
 - https://keras.rstudio.com (= https://tensorflow.rstudio.com/keras)
 - https://www.manning.com/books/deep-learning-with-r
 - everything else found useful on the Web, 
-- and my own work back from 1995-2005 :)
+- and [my own work on ANN back from 1995-2005](https://sites.google.com/site/dmitrygorodnichy/ANN/PhD-PINN) :)
 
 
 Notes:
