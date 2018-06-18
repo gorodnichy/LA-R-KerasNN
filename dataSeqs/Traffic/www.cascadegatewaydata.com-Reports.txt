@@ -1,0 +1,33 @@
+﻿
+
+Southbound Monthly Car Volumes			1/1/2008 	12/31/2014
+http://www.cascadegatewaydata.com/CustomQuery?id=31
+
+Time 	Sum - Volume
+Lynden/Aldergrove South Cars 	Pacific Highway South Cars 	Pacific Highway South NEXUS 	Peace Arch South Cars 	Peace Arch South NEXUS 	Sumas/Huntingdon South Cars 
+
+==========================================================
+
+2008-2013 Lynden/Aldergrove monthly volumes 	1/1/2008 	12/31/2013
+http://www.cascadegatewaydata.com/CustomQuery?id=43
+
+Time 	Sum - Volume
+Lynden/Aldergrove North Cars 	Lynden/Aldergrove North Trucks 	Lynden/Aldergrove South Cars 	Lynden/Aldergrove South Trucks 
+
+
+==========================================================
+
+
+2013 Average Weekend Delay, Peace Arch/Douglas 	1/1/2013 	12/31/2013
+
+Peace Arch North Cars 	Peace Arch North NEXUS 	Peace Arch South Cars 	Peace Arch South NEXUS
+Time    Avg - Delay
+
+==========================================================
+
+2013 Average Weekday Delay, Peace Arch/Douglas 	1/1/2013 	12/31/2013
+
+
+Peace Arch North Cars 	Peace Arch North NEXUS 	Peace Arch South Cars 	Peace Arch South NEXUS
+Time    Avg - Delay
+

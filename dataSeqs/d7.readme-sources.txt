@@ -1,0 +1,39 @@
+
+
+allyears2k.csv - 
+Used in http://localhost:54321/flow/index.html# h2o: Predicting Airline Delays
+During import of the data, features Year, Month, DayOfWeek, and FlightNum 
+were set to be parsed as enumerator or categorical rather than numeric columns.
+
+
+bc_db170307171311.csv - 
+https://transborder.bts.gov/programs/international/transborder/TBDR_BC/TBDR_BCQ.html
+
+
+
+# For Traffic /  BWT 
+
+
+http://www.borderdatawarehouse.com/ - the system has been decommissioned 
+Links to site below:
+
+Pacific: 
+http://www.cascadegatewaydata.com/Crossing
+http://www.cascadegatewaydata.com/Api
+http://www.cascadegatewaydata.com/Crossing/?format=json
+
+
+
+## Into Canada:
+
+https://open.canada.ca :
+
+Historical estimated border wait times (commercial and travellers flow) for Canada Border Services Agency land border crossings.
+https://open.canada.ca/data/en/dataset/000fe5aa-1d77-42d1-bfe7-458c51dacfef
+
+Estimated border wait times (commercial and travellers flow) for the busiest Canada Border Services Agency land border crossings. 
+
+## Into US:
+
+https://www.bts.gov/content/border-crossingentry-data
+https://data.transportation.gov/Research-and-Statistics/Border-Crossing-Entry-Data/keg4-3bc2/data
