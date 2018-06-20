@@ -4,7 +4,7 @@
 # `Learn and Apply Keras/Tensorflow in R/RStudio Efficiently!`  <<< ####
 # Using complete prewritten codes and your own data, With focus on analysis of sequential and text data
 #
-# Source: github.com/gorodnichy/LA-R-KerasNN
+# Source: https://github.com/gorodnichy/LA-R-KerasNN
 #
 # Based on:
 # - https://github.com/jjallaire/deep-learning-with-r-notebooks
@@ -12,15 +12,6 @@
 # - https://www.manning.com/books/deep-learning-with-r
 # - everything else found useful on the Web
 # - and my own work back from 1995-2005 :)
-#
-# My Vision for AI Scientist in XXI c:
-# 1. In XXI c., we (AI Scientists) will learn and program differently as we did in XX c.
-# - We are the users of the IDE that we are developing ourselves and for ourselves
-# - R/RStudio examplies and leads this vision
-# 2. There's increasingly too much information to learn and apply -
-#     "It is not what you've already learnt  but how much more can you learn what matters"
-# 3. Automation everywhere, including writting reports and leveraging other's codes
-# 4. S.O.S: Simplify, Organize, Subscribe  - to make everything searchable, modular, scalable and reusable
 #
 # Notes:
 # - Latest version of RStudio is always recommended (Presently, Version 1.1.447 – 2018 )
@@ -32,32 +23,32 @@
 # - `# >>> ... <<< ####` indicate Main sections
 # - Data to play with (traffic, favourite readings) are provided, inc. very small sets to run fast.
 #
-# See also `Learn and Apply interactive programming and presentations with RStudio Shiny`` (github.com/gorodnichy/LA-R-Rmd-Shiny)
+# See also `Learn and Apply interactive programming and presentations with RStudio Shiny` (github.com/gorodnichy/LA-R-Rmd-Shiny)
 
 # Contents: ####
 #
 # 1. Start here: https://keras.rstudio.com/index.html (which is the same as  https://tensorflow.rstudio.com/keras)
 # Then, as instructed there go to. # Learning More:
-
+#
 # 1-2. Guide to the Sequential Model - https://keras.rstudio.com/articles/sequential_model.html
 # Then, as instructed there go to # Examples:
-
+#
 # [1-2-1]. CIFAR10 small images classification -      https://keras.rstudio.com/articles/examples/cifar10_cnn.html
 # 1-2-2. IMDB movie review sentiment classification - https://keras.rstudio.com/articles/examples/imdb_cnn_lstm.html
 # 1-2-3. Reuters newswires topic classification -     https://keras.rstudio.com/articles/examples/reuters_mlp.html
 # 1-2-4. MNIST handwritten digits classification -    https://keras.rstudio.com/articles/examples/mnist_mlp.html
-
-
+#
+#
 # 1-3. Guide to the Functional API -    https://keras.rstudio.com/articles/functional_api.html
 # [1-4]. Frequently Asked Questions -   https://keras.rstudio.com/articles/faq.html
 # 1-1. Training Visualization -         https://keras.rstudio.com/articles/training_visualization.html
-
+#
 # Other files:
 # - DLwR-s6.1-RNN-for-text.R
 # - DLwR-s6.1-RNN-forSequences.R
 # - DLwR-s3-IMDB_sentimentBinary+wiresClassification+housepriceReression.R
 
-library(ggplot2);library(data.table); library(magrittr);
+library(ggplot2);library(data.table); library(magrittr); library(lubridate); library(stringr)
 library(tibble); library(readr); library(keras)
 
 ################################################################################################ #
