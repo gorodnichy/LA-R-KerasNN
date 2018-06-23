@@ -1,5 +1,6 @@
-# RStudio-keras-01-mnist.R
-#
+# RStudio-keras-01-imdb.R
+# 1-2-2. IMDB movie review sentiment classification - https://keras.rstudio.com/articles/examples/imdb_cnn_lstm.html ####
+
 # From:
 # https://github.com/rstudio/keras/blob/master/vignettes/examples/imdb_cnn.R =
 # https://keras.rstudio.com/articles/examples/imdb_cnn.html =

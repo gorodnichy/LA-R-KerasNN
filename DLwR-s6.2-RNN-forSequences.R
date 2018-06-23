@@ -524,7 +524,44 @@ history <- model %>% fit_generator(
 # . Create your time-series dataset - to play with ####
 
 
-# neural network for airline passengers github
-# keras recurrent R github
-#
+# Open Government -> [Historical Border Wait Times](https://open.canada.ca/data/en/dataset/000fe5aa-1d77-42d1-bfe7-458c51dacfef):
+
+library(data.table);library(ggplot2); library(lubridate);
+library(magrittr); library(stringr);  options(datatable.print.class=TRUE)
+
+dt <- fread("http://cbsa-asfc.gc.ca/data/bwt-taf-2016-07-01--2016-09-30-en.csv")
+
+# names(dt); dt
+# as.ordered(dt[[2]]) %>% levels; as.ordered(dt[[4]]) %>% levels;
+# dt[str_detect(Location, "BC")]$Location %>% unique()
+
+dt <- dt[str_detect(Location, "BC")] # select smaller subset - data from BC only
+dt[, Updated := as.POSIXct(Updated, format = "%Y-%m-%d %H:%M ")  ]
+dt$BWT <- str_replace(dt$`Travellers Flow`, "No delay", "0") %>%
+  str_replace("Closed", "0") %>%   str_replace("Not applicable", "0") %>%
+  str_replace("Missed entry", "NA") %>% as.numeric()
+
+dt <- dt[, .(Updated, BWT, Location)]
+plot(as.ts(dt))
+dt <- dt[, ':='(hh=hour(Updated), wd=wday(Updated))]
+dt
+
+# plot(as.ts(dt))
+# ggTimeSeries::ggplot_calendar_heatmap( dt, 'Updated', 'BWT')
+
+
+theme_set(theme_minimal())
+ggplot(dt[Updated>=dmy("01/09/2016")], aes(Updated,BWT, col=Location)) +
+  geom_step() + facet_grid(Location ~ .)
+
+#impute NA
+nNA <- which(is.na(dt$BWT))
+dt[nNA]$BWT <- dt[nNA+1]$BWT
+dt[BWT==0, BWT:=1]
+
+#Simplest possible: one-liner "solutions"
+#model <- arima(as.ts(dt[Location=='Delta, BC',BWT]))
+# library(GMDH)
+# predictedBWT <- GMDH::fcast(as.ts(dt[Location=='Delta, BC',BWT]))
+# plot(as.ts(predictedBWT))
 

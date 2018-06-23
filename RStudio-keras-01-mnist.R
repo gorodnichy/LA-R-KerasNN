@@ -1,42 +1,29 @@
 # RStudio-keras-01-mnist.R
-#
+# 1-2-4. MNIST handwritten digits classification -    https://keras.rstudio.com/articles/examples/mnist_mlp.html ####
+# [1-2-1]. CIFAR10 small images classification -      https://keras.rstudio.com/articles/examples/cifar10_cnn.html
+
 # From:
-# https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_cnn.R =
-# https://keras.rstudio.com/articles/examples/mnist_cnn.html =
-# https://tensorflow.rstudio.com/keras/articles/examples/mnist_cnn.html
+# https://github.com/rstudio/keras/blob/master/vignettes/examples/mnist_*.R =
+# https://keras.rstudio.com/articles/examples/mnist_*.html =
+# https://tensorflow.rstudio.com/keras/articles/examples/mnist_*.html
 #
 
+library(ggplot2);library(data.table); library(magrittr);
+library(tibble); library(readr); library(keras)
 
 
-#.############################################################################
-# 2 > mnist_cnn.R ####
-
-
-#' Trains a simple convnet on the MNIST dataset.
-#'
-#' Gets to 99.25% test accuracy after 12 epochs
-#'  Note: There is still a large margin for parameter tuning
-#'
-#' 16 seconds per epoch on a GRID K520 GPU.
-
-library(keras)
 
 # Data Preparation -----------------------------------------------------
 
-batch_size <- 128
 num_classes <- 10
-epochs <- 12
+batch_size <- 128
+epochs <- 30
 
 # Input image dimensions
 img_rows <- 28
 img_cols <- 28
 
-# The data, shuffled and split between train and test sets
-mnist <- dataset_mnist()
-x_train <- mnist$train$x
-y_train <- mnist$train$y
-x_test <- mnist$test$x
-y_test <- mnist$test$y
+c(c(x_train, y_train), c(x_test, y_test)) %<-% dataset_mnist()
 
 # Redefine  dimension of train/test inputs
 x_train <- array_reshape(x_train, c(nrow(x_train), img_rows, img_cols, 1))
@@ -54,6 +41,30 @@ cat(nrow(x_test), 'test samples\n')
 # Convert class vectors to binary class matrices
 y_train <- to_categorical(y_train, num_classes)
 y_test <- to_categorical(y_test, num_classes)
+
+
+#.####################################################################################
+# 1-2-4. 0 > mnist_mlp.R ####
+# . = # 1-0 "Hello World" for Keras: MNIST 28x28 digit recognition ####
+
+#' Trains a simple deep NN on the MNIST dataset.
+#' Gets to 98.40% test accuracy after 20 epochs (there is a lot of margin for parameter tuning). 2 seconds per epoch on a K520 GPU.
+
+
+
+
+#.############################################################################
+# 1> mnist_cnn.R ####
+
+
+#' Trains a simple convnet on the MNIST dataset.
+#' Gets to 99.25% test accuracy after 12 epochs
+#'  Note: There is still a large margin for parameter tuning
+#'
+#' 16 seconds per epoch on a GRID K520 GPU.
+
+
+
 
 # Define Model -----------------------------------------------------------
 
@@ -96,81 +107,9 @@ cat('Test loss:', scores[[1]], '\n')
 cat('Test accuracy:', scores[[2]], '\n')
 
 
-#.####################################################################################
-# 1 > mnist_mlp.html ####
-
-# Trains a simple deep NN on the MNIST dataset.
-# Gets to 98.40% test accuracy after 20 epochs (there is a lot of margin for parameter tuning). 2 seconds per epoch on a K520 GPU.
-
-library(keras)
-
-# Data Preparation ---------------------------------------------------
-
-batch_size <- 128
-num_classes <- 10
-epochs <- 30
-
-# The data, shuffled and split between train and test sets
-c(c(x_train, y_train), c(x_test, y_test)) %<-% dataset_mnist()
-
-x_train <- array_reshape(x_train, c(nrow(x_train), 784))
-x_test <- array_reshape(x_test, c(nrow(x_test), 784))
-
-# Transform RGB values into [0,1] range
-x_train <- x_train / 255
-x_test <- x_test / 255
-
-cat(nrow(x_train), 'train samples\n')
-cat(nrow(x_test), 'test samples\n')
-
-# Convert class vectors to binary class matrices
-y_train <- to_categorical(y_train, num_classes)
-y_test <- to_categorical(y_test, num_classes)
-
-# Define Model --------------------------------------------------------------
-
-model <- keras_model_sequential()
-model %>%
-  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>%
-  layer_dropout(rate = 0.4) %>%
-  layer_dense(units = 128, activation = 'relu') %>%
-  layer_dropout(rate = 0.3) %>%
-  layer_dense(units = 10, activation = 'softmax')
-
-summary(model)
-
-model %>% compile(
-  loss = 'categorical_crossentropy',
-  optimizer = optimizer_rmsprop(),
-  metrics = c('accuracy')
-)
-
-# Training & Evaluation ----------------------------------------------------
-
-# Fit model to data
-history <- model %>% fit(
-  x_train, y_train,
-  batch_size = batch_size,
-  epochs = epochs,
-  verbose = 1,
-  validation_split = 0.2
-)
-
-plot(history)
-
-score <- model %>% evaluate(
-  x_test, y_test,
-  verbose = 0
-)
-
-# Output metrics
-cat('Test loss:', score[[1]], '\n')
-cat('Test accuracy:', score[[2]], '\n')
-
-
 
 #.################################################################################
-# 4 > mnist_antirectifier.R ####
+# 2 > mnist_antirectifier.R ####
 ############################################################################### #
 
 # Demonstrates how to write custom layers for Keras.
@@ -178,46 +117,22 @@ cat('Test accuracy:', score[[2]], '\n')
 # shape of the tensor that passes through it. We need to specify two methods: compute_output_shape and call.
 # Note that the same result can also be achieved via a Lambda layer.
 
-library(keras)
-
-# Data Preparation --------------------------------------------------------
-
-batch_size <- 128
-num_classes <- 10
-epochs <- 40
-
-# The data, shuffled and split between train and test sets
-mnist <- dataset_mnist()
-x_train <- mnist$train$x
-y_train <- mnist$train$y
-x_test <- mnist$test$x
-y_test <- mnist$test$y
-
-# Redimension
-x_train <- array_reshape(x_train, c(nrow(x_train), 784))
-x_test <- array_reshape(x_test, c(nrow(x_test), 784))
-
-# Transform RGB values into [0,1] range
-x_train <- x_train / 255
-x_test <- x_test / 255
-
-cat(nrow(x_train), 'train samples\n')
-cat(nrow(x_test), 'test samples\n')
-
-# Convert class vectors to binary class matrices
-y_train <- to_categorical(y_train, num_classes)
-y_test <- to_categorical(y_test, num_classes)
-
 # Antirectifier Layer -----------------------------------------------------
-This is the combination of a sample-wise L2 normalization with the concatenation of the positive part of the input with the negative part of the input. The result is a tensor of samples that are twice as large as the input samples.
 
-It can be used in place of a ReLU. Input shape: 2D tensor of shape (samples, n) Output shape: 2D tensor of shape (samples, 2*n)
+#This is the combination of a sample-wise L2 normalization with the concatenation of the positive
+#part of the input with the negative part of the input. The result is a tensor of samples that
+#are twice as large as the input samples.
 
-When applying ReLU, assuming that the distribution of the previous output is approximately centered around 0., you are discarding half of your input. This is inefficient.
+#It can be used in place of a ReLU. Input shape: 2D tensor of shape (samples, n) Output shape:
+#2D tensor of shape (samples, 2*n)
 
-Antirectifier allows to return all-positive outputs like ReLU, without discarding any data.
+#When applying ReLU, assuming that the distribution of the previous output is approximately
+#centered around 0., you are discarding half of your input. This is inefficient.
 
-Tests on MNIST show that Antirectifier allows to train networks with half the parameters yet with comparable classification accuracy as an equivalent ReLU-based network.
+#Antirectifier allows to return all-positive outputs like ReLU, without discarding any data.
+
+#Tests on MNIST show that Antirectifier allows to train networks with half the parameters
+#yet with comparable classification accuracy as an equivalent ReLU-based network.
 
 # Custom layer class
 AntirectifierLayer <- R6::R6Class("KerasLayer",
@@ -293,43 +208,10 @@ model %>% fit(x_train, y_train,
 #' Reaches 0.93 train/test accuracy after 900 epochs
 #' This corresponds to roughly 1687500 steps in the original paper.
 
-library(keras)
-
-# Data Preparation ---------------------------------------------------------------
-
-batch_size <- 32
-num_classes <- 10
-epochs <- 200
 hidden_units <- 100
-
-img_rows <- 28
-img_cols <- 28
 
 learning_rate <- 1e-6
 clip_norm <- 1.0
-
-# The data, shuffled and split between train and test sets
-mnist <- dataset_mnist()
-x_train <- mnist$train$x
-y_train <- mnist$train$y
-x_test <- mnist$test$x
-y_test <- mnist$test$y
-
-x_train <- array_reshape(x_train, c(nrow(x_train), img_rows * img_cols, 1))
-x_test <- array_reshape(x_test, c(nrow(x_test), img_rows * img_cols, 1))
-input_shape <- c(img_rows, img_cols, 1)
-
-# Transform RGB values into [0,1] range
-x_train <- x_train / 255
-x_test <- x_test / 255
-
-cat('x_train_shape:', dim(x_train), '\n')
-cat(nrow(x_train), 'train samples\n')
-cat(nrow(x_test), 'test samples\n')
-
-# Convert class vectors to binary class matrices
-y_train <- to_categorical(y_train, num_classes)
-y_test <- to_categorical(y_test, num_classes)
 
 # Define Model ------------------------------------------------------------------
 
@@ -367,7 +249,7 @@ cat('IRNN test accuracy:', scores[[2]], '\n')
 
 
 #.################################################################################
-# 5 > mnist_hierarchical_rnn.R ####
+# 4 > mnist_hierarchical_rnn.R ####
 ############################################################################### #
 
 #' This is an example of using Hierarchical RNN (HRNN) to classify MNIST digits.
@@ -396,40 +278,13 @@ cat('IRNN test accuracy:', scores[[2]], '\n')
 #' After 5 epochs: train acc: 0.9858, val acc: 0.9864
 #'
 
-library(keras)
-
 # Data Preparation -----------------------------------------------------------------
 
-# Training parameters.
-batch_size <- 32
-num_classes <- 10
-epochs <- 5
 
 # Embedding dimensions.
 row_hidden <- 128
 col_hidden <- 128
 
-# The data, shuffled and split between train and test sets
-mnist <- dataset_mnist()
-x_train <- mnist$train$x
-y_train <- mnist$train$y
-x_test <- mnist$test$x
-y_test <- mnist$test$y
-
-# Reshapes data to 4D for Hierarchical RNN.
-x_train <- array_reshape(x_train, c(nrow(x_train), 28, 28, 1))
-x_test <- array_reshape(x_test, c(nrow(x_test), 28, 28, 1))
-x_train <- x_train / 255
-x_test <- x_test / 255
-
-dim_x_train <- dim(x_train)
-cat('x_train_shape:', dim_x_train)
-cat(nrow(x_train), 'train samples')
-cat(nrow(x_test), 'test samples')
-
-# Converts class vectors to binary class matrices
-y_train <- to_categorical(y_train, num_classes)
-y_test <- to_categorical(y_test, num_classes)
 
 # Define input dimensions
 row <- dim_x_train[[2]]
@@ -475,7 +330,7 @@ cat('Test accuracy:', scores[[2]], '\n')
 
 
 #.################################################################################
-# 6 > mnist_transfer_cnn.R ####
+# 5 > mnist_transfer_cnn.R ####
 ############################################################################### #
 
 
@@ -486,17 +341,11 @@ cat('Test accuracy:', scores[[2]], '\n')
 #'    for the classification of digits [5..9].
 #'
 
-library(keras)
-
 now <- Sys.time()
 
-batch_size <- 128
-num_classes <- 5
-epochs <- 5
 
-# input image dimensions
-img_rows <- 28
-img_cols <- 28
+
+#  used in 5.
 
 # number of convolutional filters to use
 filters <- 32
@@ -510,12 +359,7 @@ kernel_size <- c(3, 3)
 # input shape
 input_shape <- c(img_rows, img_cols, 1)
 
-# the data, shuffled and split between train and test sets
-data <- dataset_mnist()
-x_train <- data$train$x
-y_train <- data$train$y
-x_test <- data$test$x
-y_test <- data$test$y
+
 
 # create two datasets one with digits below 5 and one with 5 and above
 x_train_lt5 <- x_train[y_train < 5]
@@ -563,7 +407,7 @@ feature_layers <-
 
 
 #.################################################################################
-# 0 > cifar10_cnn.R ####
+# 1-2-1. 0 > cifar10_cnn.R ####
 ############################################################################### #
 
 #' Train a simple deep CNN on the CIFAR10 small images dataset.
