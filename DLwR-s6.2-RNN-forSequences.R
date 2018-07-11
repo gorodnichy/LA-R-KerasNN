@@ -524,11 +524,12 @@ history <- model %>% fit_generator(
 # . Create your time-series dataset - to play with ####
 
 
-# Open Government -> [Historical Border Wait Times](https://open.canada.ca/data/en/dataset/000fe5aa-1d77-42d1-bfe7-458c51dacfef):
+# BWT: Open Government -> [Historical Border Wait Times](https://open.canada.ca/data/en/dataset/000fe5aa-1d77-42d1-bfe7-458c51dacfef): ----
 
 library(data.table);library(ggplot2); library(lubridate);
 library(magrittr); library(stringr);  options(datatable.print.class=TRUE)
 
+# downloaded 5.1 MB
 dt <- fread("http://cbsa-asfc.gc.ca/data/bwt-taf-2016-07-01--2016-09-30-en.csv")
 
 # names(dt); dt
@@ -564,4 +565,67 @@ dt[BWT==0, BWT:=1]
 # library(GMDH)
 # predictedBWT <- GMDH::fcast(as.ts(dt[Location=='Delta, BC',BWT]))
 # plot(as.ts(predictedBWT))
+
+
+
+
+# Car volumes: http://www.cascadegatewaydata.com/Reports  (Car Volumes + BWT on the Canada-US border )  ----
+# Southbound Monthly Car Volumes,  	1/1/2008 	12/31/2014  - 5Kb
+dt <- fread("c:/Users/Computer/Documents/_CODES/_OPEN/LA-R-Keras/dataSeqs/Traffic/query-volume-3ports.csv")
+# 2008-2013 Lynden/Aldergrove monthly volumes 	1/1/2008 	12/31/2013 - 3kb
+dt <- fread("c:/Users/Computer/Documents/_CODES/_OPEN/LA-R-Keras/dataSeqs/Traffic/query-volume.csv")
+#2013 Average Weekend Delay, Peace Arch/Douglas 	1/1/2013 	12/31/2013 89Kb
+dt <- fread("c:/Users/Computer/Documents/_CODES/_OPEN/LA-R-Keras/dataSeqs/Traffic/query-delay1.csv")
+
+
+
+setnames(dtVolume, "Group Starts", "TIME")
+dtVolume[, TIME := as.POSIXct(TIME, format = "%Y-%m-%d %H:%M ") ]
+strCol = 1;   dtVolume[[strCol]] = as.ordered(dtVolume[[strCol]])
+
+# plots <- list();
+# for(i in 2:ncol(dt)) {
+#   strX = names(dt)[i]
+#   print(sprintf("%i: strX = %s", i, strX))
+#   plots[[i]] <- ggplot(dt) + xlab(strX) +
+#     geom_point(aes_string(strX),stat="count",size=2) +
+#     geom_line(aes_string(strX),stat="count",size=1, col="grey")
+#   print(plots[[i]])
+# }
+multiplot(plotlist = plots, cols = 1)
+
+g <- list()
+for(i in 1:(ncol(dt)-1) {
+  strX = names(dt)[i+1]
+  g[[i]] <- ggplot(dt, aes(y=TIME)) + labs(title=strX) +
+    geom_line(aes_string(strX), col=i) +
+    geom_label(data=data.frame(x=0,y=0), aes(x,y), col=i, label=strX, hjust=0, vjust=0)
+}
+GGally::ggmatrix(nrow=3, ncol=1, title = "Your data")
+
+ggplot() + geom_line(aes(x=dt$`Sum - Volume (Lynden/Aldergrove North Cars)`), y=dt$TIME))
+
+  dtDelay <- fread("c:/Users/Computer/Documents/_CODES/_OPEN/LA-R-Keras/dataSeqs/Traffic/query-delay1.csv") #on week-ends
+
+line(dt[[1]], dt[[2]])
+
+g <- list()
+for(i in 1:(ncol(dt)-1)) {
+  g[[i]] <- ggplot() + labs(y=names(dt)[i+1], x=names(dt)[1]) +
+    geom_line(aes(y=dt[[i+1]], x=dt[[1]])) + geom_point(aes(y=dt[[i+1]], x=dt[[1]]))
+  # geom_label(data=data.frame(x=0,y=0), aes(x,y), col=i, label=names(dt)[i+1], hjust=0, vjust=0)
+  print(g[[i]])
+}
+GGally::ggmatrix(g, nrow=ncol(dt)-1, ncol=1, title = "Your data")
+
+ggfortify::autoplot(g)
+
+
+# currency exchange data ----
+
+dtExchange= fread ("dataCBSA/currencyCAN_US_2008-2018.csv") #Exchange Rates 20070124-20170124.csv");
+setnames(dtExchange, c("TIME","USD"))
+dtExchange = dtExchange[,TIME := as.POSIXct(as.Date(dmy(TIME)))]
+dt = dtExchange[dt,roll=Inf,on="TIME"]
+
 

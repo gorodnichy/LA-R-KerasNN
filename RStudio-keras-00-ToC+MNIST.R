@@ -60,57 +60,52 @@ library(tibble); library(readr); library(keras)
 
 # Get and prepare mnist data-set ----
 
-num_classes <- 10 # 10 digits
+num_classes <- 10
+batch_size <- 128
+epochs <- 30
 # Input image dimensions
 img_rows <- 28
 img_cols <- 28
 
-batch_size <- 128
-epochs <- 30
-
-
-if (F) {
-  c(c(x_train, y_train), c(x_test, y_test)) %<-% dataset_mnist()
-  if (F) {# this the same as:
-    mnist <- dataset_mnist();
-    x_train <- mnist$train$x; y_train <- mnist$train$y;
-    x_test <- mnist$test$x; y_test <- mnist$test$y
-  }
-  rm(mnist);
+c(c(x_train, y_train), c(x_test, y_test)) %<-% dataset_mnist()
+if (F) {# this the same as:
+  mnist <- dataset_mnist();
+  x_train <- mnist$train$x; y_train <- mnist$train$y;
+  x_test <- mnist$test$x; y_test <- mnist$test$y
 }
-# make small subset: take 100 samples of each digit (instead of 6000) for training, and 50 (instead of 1000) for testing
-mnist <- dataset_mnist();
-dtTrain <- data.table(x=list(mnist$train$x), y=mnist$train$y); setkey(dtTrain, y)
-dtTrain <- dtTrain[, .SD[1:100], by=y, .SDcols="y"]
-
-dtTest <- data.table(x=list(mnist$test$x), y=mnist$test$y); setkey(dtTest, y)
-dtTest <- dtTest[, .SD[1:50], by=y, .SDcols="y"]
-
-
-x_train <- dtTrain$x
-y_train <- dtTrain$y
-
-x_test <- dtTest$x
-y_test <- dtTest$y
-
 str(x_train) # int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...
 str(y_train) # int [1:60000(1d)] 5 0 4 1 9 2 1 3 1 4 ...
 str(x_test)  # int [1:10000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...
-x_train[1,,] # - See a digit
+x_train[1,,] # - See the letter
+
+# make small subset: take 12 samples of each digit (instead of 6000) for training, and 6 (instead of 1000) for testing
+dt <- data.table(list(x_train), y_train); setkey(dt, V2)
+dt <- dt[, .SD[1:12], by=V2, .SDcols="V2"]
+
+dtTest <- data.table(list(x_test), y_train); setkey(dt, V2)
+dt <- dt[, .SD[1:12], by=V2, .SDcols="V2"]
+
+
+
+rm(mnist);  x_train <- x_train[1,,]
+
+
 
 # reshape = # Redefine  dimension of train/test inputs
 # x_train <- array_reshape(x_train, c(nrow(x_train), 784))
+#x_test2 <- array_reshape(x_test, c(nrow(x_test), 784))
 x_train <- array_reshape(x_train, c(nrow(x_train), img_rows, img_cols, 1))
 x_test <- array_reshape(x_test, c(nrow(x_test), img_rows, img_cols, 1))
-input_shape <- c(img_rows, img_cols, 1) # Not used in mnist_mlp.R, but use in in mnist_cnn.R (1-2-4. 1)
+input_shape <- c(img_rows, img_cols, 1) # Not use in mnist_mlp.R, but use in in mnist_cnn.R (1-2-4. 1)
 
-# rescale = # Transform RGB values into [0,1] range
+# rescale = # # Transform RGB values into [0,1] range
 x_train <- x_train / 255;
-x_test <- x_test2 / 255
+x_test2 <- x_test2 / 255
 
 # Binarize output (as done in PINN) = # Convert class vectors to binary class matrices
 y_train <- to_categorical(y_train, num_classes)
 y_test <- to_categorical(y_test, num_classes)
+
 
 
 
